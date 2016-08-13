@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Mail service explore 探索邮箱正则</title>
+  	<meta name="description" content="">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+		    padding: 0;
+		    margin: 0;
+		   /* background: #272822;*/
+		    background-color: #655c5c;
+		    cursor: text;
+		}
+		#box{
+			color: #909083;
+			padding-top: 40px;
+			font: 16px/26px Menlo, Monaco, Consolas, "Courier New", monospace;
+			box-shadow: inset 40px 0 0 #272822, inset 41px 0 20px rgba(0, 0, 0, 0.5);
+		}
+		#box h3 {
+		    color: #0DD425;
+		}
+		#box .key {
+		    color: #DF2D51;
+		}
+		.providers{
+			
+		}
+		.rules{
+			list-style-type:lower-roman;/*upper-roman lower-latin */
+			color:#E6DB67;
+		}
+		pre{
+			border: 1px solid #f8f9e2;
+			color:#fff;
+			padding:10px;
+			margin: 10px 0;
+			display: block;
+			text-indent: 0;
+			white-space: pre-line;  
+		}
+
+ 		footer {
+ 				position: fixed;
+ 				background-color: #844f4f;
+ 				width: 100%;
+        border-right: 2px solid #fff;
+        padding:10px;
+        margin: 0 2px;
+        height: 20px;
+        -webkit-animation: cursor 1.5s infinite ease-in-out;
+        -moz-animation: cursor 1.5s infinite ease-in-out;
+        animation: cursor 1.5s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes cursor {
+        0% {
+            color: rgba(255, 255, 255, .1);
+        }
+        50% {
+            color: rgba(255, 255, 255, 1);
+        }
+        100% {
+            color: rgba(255, 255, 255, .1);
+        }
+    }
+
+    @-moz-keyframes cursor {
+        0% {
+            color: rgba(255, 255, 255, .1);
+        }
+        50% {
+            color: rgba(255, 255, 255, 1);
+        }
+        100% {
+            color: rgba(255, 255, 255, .1);
+        }
+    }
+
+    @keyframes cursor {
+        0% {
+            color: rgba(255, 255, 255, .1);
+        }
+        50% {
+            color: rgba(255, 255, 255, 1);
+        }
+        100% {
+            color: rgba(255, 255, 255, .1);
+        }
+    }
+	</style>
+</head>
+<body>
+	<footer>
+		原创内容，欢迎给个star
+	</footer>
+	<div id="box">
+		<h3>Mail service providers explore 探索各大邮箱服务提供商的注册规则</h3>
+		<ol class="providers">
+			<li><span class="key">网易邮箱注册邮箱地址规则</span>
+				<ol class="rules">
+					<li>6~18个字符，可使用字母、数字、下划线，需以字母开头
+						<pre>
+							var regex = /^\w{6,18}/;
+							/*分解： '\w' 匹配字母、数字、下划线,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>邮件地址必需以英文字母开头
+						<pre>
+							var regex = /^[a-zA-Z]/;
+							/*分解： '[a-zA-Z]' 匹配字母,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>用户名必需以英文字母或数字结尾
+						<pre>
+							var regex = /[a-zA-Z0-9]$/;
+							/*分解： '[a-zA-Z0-9]' 匹配字母或数字,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+					<li>域名部分必须是以126(163).com或yeah.net结尾
+						<pre>
+							var regex = /((126|163)\.com|yeah\.net)$/;
+							/*分解： '|' 或 匹配,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+					<li>匹配以上所有的正则
+						<pre>
+							var regex = /^[a-zA-Z]\w{4,18}[a-zA-Z0-9]@((126|163)\.com|yeah\.net)$/;
+							/*分解：大家可自行去官网验证*/
+							如果写
+						</pre>
+					</li>
+				</ol>
+
+			</li>
+			<li><span class="key">QQ邮箱注册邮箱地址规则</span>
+				<ol class="rules">
+					<li>由3-18个英文、数字、点、减号、下划线组成
+						<pre>
+							var regex = /^[\w.-]{3,18}/;
+							/*分解： '[\w.-]' 匹配字母、数字、下划线、点、减号,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>邮件地址必需以英文字母开头
+						<pre>
+							var regex = /^[a-zA-Z]/;
+							/*分解： '[a-zA-Z]' 匹配字母,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>用户名必需以英文字母或数字结尾
+						<pre>
+							var regex = /[a-zA-Z0-9]$/;
+							/*分解： '[a-zA-Z0-9]' 匹配字母或数字,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+					<li>点、减号、下划线不能连续出现两次或两次以上
+						<pre>
+							var regex = /^(\.|-|_)?$/;
+							/*分解： '[.-_]' 匹配点、减号、下划线,'?' 重复零次或一次*/
+						</pre>
+					</li>
+					<li>域名部分必须是以qq(foxmail).com结尾
+						<pre>
+							var regex = /(qq|foxmail)\.com$/;
+							/*分解： '|' 或 匹配,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+					<li>匹配以上所有的正则
+						<pre>
+						  var regex1 =/^[a-zA-Z](\w|\.|-){1,16}[a-zA-Z0-9]@(qq|foxmail)\.com$/;
+						  //此表达式不匹配第三点，点、减号、下划线不能连续出现两次或两次以上
+						  //改进写法 加入零宽正向先行断言  (?=pattern)
+							var regex = /^[a-zA-Z]([a-zA-Z0-9]|(_|\.|-)(?=[a-zA-Z0-9])){1,16}[a-zA-Z0-9]@(qq|foxmail)\.com$/;
+							/*分解：大家可自行去官网验证*/
+							如果写
+						</pre>
+					</li>
+				</ol>
+			</li>
+			<li><span class="key">雅虎邮箱注册用户名规则</span>
+				<ol class="rules">
+					<li>由4-32个英文、数字、点、下划线组成
+						<pre>
+							var regex = /^[\w.-]{4,32}/;
+							/*分解： '[\w.]' 匹配字母、数字、下划线、点,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>邮件地址必需以英文字母开头
+						<pre>
+							var regex = /^[a-zA-Z]/;
+							/*分解： '[a-zA-Z]' 匹配字母,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>点、下划线不能连续出现两次或两次以上
+						<pre>
+							var regex = /^(\.|_)?$/;
+							/*分解： '(\.|_)' 匹配点、下划线,'?' 重复零次或一次*/
+						</pre>
+					</li>
+					<li>必需以英文字母或数字结尾
+						<pre>
+							var regex = /[a-zA-Z0-9]$/;
+							/*分解： '[a-zA-Z0-9]' 匹配字母或数字,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+					<li>域名部分必须是以yahoo.com结尾
+						<pre>
+							var regex = /yahoo\.com$/;
+							/*分解： '|' 或 匹配,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+				</ol>
+			</li>
+			<li><span class="key">微软邮箱注册用户名规则</span>
+				<ol class="rules">
+					<li>由1-64个英文、数字、减号、下划线组成
+						<pre>
+							var regex = /^[\w.-]{1,64}/;
+							/*分解： '[\w.]' 匹配字母、数字、下划线、点,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>邮件地址必需以英文字母开头						
+						<pre>
+							var regex = /^[a-zA-Z]/;
+							/*分解： '[a-zA-Z]' 匹配字母,'^' 匹配字符串开始*/
+						</pre>
+					</li>
+					<li>域名部分必须是以(hotmail|outlook).com结尾	
+						<pre>
+							var regex = /(hotmail|outlook)\.com$/;
+							/*分解： '|' 或 匹配,'$' 匹配字符串结尾*/
+						</pre>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</div>
+</body>
+</html>
